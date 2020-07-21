@@ -45,15 +45,37 @@ public class Controller {
         return original;
     }
 
-    @PostMapping("/encode")
-    public String encode() {
-        return "Hello from Spring!";
+    @PostMapping(value = "/encode", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String encode(@RequestParam Map<String, String> formData) {
+
+        String message = formData.get("message");
+        String key = formData.get("key");
+
+        return message;
     }
 
-    @PostMapping("s/<find>/<replacement>")
-    public String camel() {
-        return "Hello from Spring!";
+    @PostMapping("s/{find}/{replacement}")
+    public String sed(
+            @PathVariable String find,
+            @PathVariable String replacement,
+            @RequestBody String body
+    ) {
+        body = body.replaceAll("message=","");
+        body = body.replaceAll(find,replacement);
+
+        return body;
     }
+
+
+
+
+
+
+
+
+
+
+
 
     public static String toCamelCase(String str, final boolean capitalizeFirstLetter, final char... delimiters) {
         str = str.toLowerCase();
