@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,8 +30,19 @@ public class Controller {
     }
 
     @GetMapping("/redact")
-    public String redact() {
-        return "Hello from Spring!";
+    public String redact(
+            @RequestParam String original,
+            @RequestParam(value="badWord") List<String> words
+    ) {
+        int total = 0;
+
+
+
+        for (int i = 0; i<words.size(); i++){
+           original = original.replaceAll(words.get(i),"*****");
+        }
+
+        return original;
     }
 
     @PostMapping("/encode")
