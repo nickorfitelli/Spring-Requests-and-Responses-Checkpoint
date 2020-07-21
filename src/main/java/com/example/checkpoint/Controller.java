@@ -62,6 +62,7 @@ public class Controller {
     ) {
         body = body.replaceAll("message=","");
         body = body.replaceAll(find,replacement);
+        body = body.replace("+", " ");
 
         return body;
     }
